@@ -1,22 +1,9 @@
-<<<<<<< HEAD
-=======
-# trippler
-
-Build do docker: <br>
-`docker build -t shaianeboesing/trippler .`
-
-Run npm install: <br>
-`npm install`
-
-Levantar aplicação: <br>
-`docker-compose up`
-
-Acessar bash em outra janela do terminal: <br>
-`docker exec -it trippler-app-1  bash`
-
-Rodar ddl e seed dentro do bash <br>
-``` 
-node database/migrate.js ./database/scripts/ddl.sql
-node database/migrate.js ./database/scripts/seed.sql
-```
->>>>>>> 88f0fa74d8da2fd2edddf5e49725e1c954dcae3a
+Para configurar o bando de dados sql server é necessário:
+Ir em Serviços -> SQL Server Browser -> Propriedades -> Tipo de Inicialização -> Automático
+Iniciar o serviço
+Ir em gerenciamento do computador -> Serviços e aplicativos -> SQL server configuration -> SQL server network configuration -> protocols... -> ativar TCP/IP
+Na conexão do banco de dados do ssms -> botão direito -> propriedades -> Security -> mudar para SQL Server and Windows Authentication mode
+ir em security -> Logins -> new login
+mudar para SQL Server and Authentication -> usuário e senha 'admin'
+desmarcar parâmetro Enforce password policy
+em server roles marcar sysadmin
