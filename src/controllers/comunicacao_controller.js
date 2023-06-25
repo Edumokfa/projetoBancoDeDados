@@ -185,12 +185,35 @@ async function executaProcedureRealizarCompra(req, res) {
   }
 }
 
+async function executaProcedureComprasDoCliente(req, res) {
+  try {
+    await sql.connect(config);
+
+    const request = new sql.Request();
+
+    request.input("CLIENTE_ID", sql.Int, req.body.idCliente);
+
+    const result = await request.execute("BUSCAR_TODAS_AS_COMPRAS_DO_CLIENTE");
+    const response = result.output.RESPONSE;
+    res.status(201).json({ compras: result.recordset });
+  } catch (error) {
+    console.error("Erro:", error.message);
+    res.status(201).json({ erro: error.message });
+  } finally {
+    sql.close();
+  }
+}
+
 exports.buscaCompras = async function (req, res) {
   executeQuery("SELECT * FROM COMPRAS", res);
 };
 
 exports.realizaCompra = async function (req, res) {
   executaProcedureRealizarCompra(req, res);
+};
+
+exports.buscaComprasDoCliente = async function (req, res) {
+  executaProcedureComprasDoCliente(req, res);
 };
 
 //Itens de compra
@@ -215,6 +238,30 @@ async function executaProcedureInserirItens(req, res) {
     sql.close();
   }
 }
+
+async function executaProcedureComprasDoPeriodo(req, res) {
+  try {
+    await sql.connect(config);
+
+    const request = new sql.Request();
+
+    request.input("DATA_INICIAL", sql.DateTime, req.body.dataInicial);
+    request.input("DATA_FINAL", sql.DateTime, req.body.dataFinal);
+
+    const result = await request.execute("BUSCAR_TODAS_AS_COMPRAS_DO_PERIODO");
+    const response = result.output.RESPONSE;
+    res.status(201).json({ compras: result.recordset });
+  } catch (error) {
+    console.error("Erro:", error.message);
+    res.status(201).json({ erro: error.message });
+  } finally {
+    sql.close();
+  }
+}
+
+exports.buscaComprasPeriodo = async function (req, res) {
+  executaProcedureComprasDoPeriodo(req, res);
+};
 
 exports.buscaItensCompra = async function (req, res) {
   executeQuery("SELECT * FROM ITENS_COMPRA", res);

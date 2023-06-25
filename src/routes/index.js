@@ -18,6 +18,8 @@ routes.post('/deletaDescontos', comunicacao.deletaDesconto);
 
 routes.get('/compras', comunicacao.buscaCompras);
 routes.post('/realizarCompra', comunicacao.realizaCompra);
+routes.get('/comprasDoCliente', comunicacao.buscaComprasDoCliente);
+routes.get('/comprasDoPeriodo', comunicacao.buscaComprasPeriodo);
 
 routes.get('/itensCompra', comunicacao.buscaItensCompra);
 routes.post('/inserirItem', comunicacao.inserirItens);

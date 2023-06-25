@@ -15,14 +15,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/produtos",
+							"raw": "http://localhost:3000/clientes",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"produtos"
+								"clientes"
 							]
 						}
 					},
@@ -35,7 +35,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cliNome\" : \"Patricia\",\r\n    \"cliSobrenome\" : \"Pereira Neto\",\r\n    \"cliCpf\" : \"03920192032\",\r\n    \"cliCelular\" : \"54984840392\",\r\n    \"cliTelefone\" : \"\"\r\n}",
+							"raw": "{\r\n    \"cliNome\" : \"Teste\",\r\n    \"cliSobrenome\" : \"Pereira Neto\",\r\n    \"cliCpf\" : \"03920192099\",\r\n    \"cliCelular\" : \"54984840392\",\r\n    \"cliTelefone\" : \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -63,7 +63,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cliNome\" : \"Patricia\",\r\n    \"cliSobrenome\" : \"Pereira Neto\",\r\n    \"cliCpf\" : \"03920192032\",\r\n    \"cliCelular\" : \"54984840392\",\r\n    \"cliTelefone\" : \"\"\r\n}",
+							"raw": "{\r\n    \"cliNome\" : \"PatríciaS\",\r\n    \"cliSobrenome\" : \"Pereira Neto\",\r\n    \"cliCpf\" : \"03920192055\",\r\n    \"cliCelular\" : \"54984840392\",\r\n    \"cliTelefone\" : \"\",\r\n    \"cliId\" : 5\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -71,14 +71,42 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/criaClientes",
+							"raw": "http://localhost:3000/atualizaClientes",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"criaClientes"
+								"atualizaClientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleta cliente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cliId\" : 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/deletaClientes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"deletaClientes"
 							]
 						}
 					},
@@ -143,13 +171,65 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nomeProd\" : \"Produto Criado\",\r\n    \"precoProd\" : \"undefined\"\r\n}",
+							"raw": "{\r\n    \"prodNome\" : \"Produto Atualizado pelo postman\",\r\n    \"prodPreco\" : 100,\r\n    \"prodId\" : 5\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
+						"url": {
+							"raw": "http://localhost:3000/atualizaProdutos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"atualizaProdutos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deleta produtos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"prodNome\" : \"Produto Atualizado pelo postman\",\r\n    \"prodPreco\" : 100,\r\n    \"prodId\" : 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/deletaProdutos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"deletaProdutos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Descontos",
+			"item": [
+				{
+					"name": "busca descontos",
+					"request": {
+						"method": "GET",
+						"header": [],
 						"url": {
 							"raw": "http://localhost:3000/produtos",
 							"protocol": "http",
@@ -159,6 +239,244 @@
 							"port": "3000",
 							"path": [
 								"produtos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cria descontos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"prodNome\" : \"IHUDFGBHUIDFGUHBIDFHUIGHBUDFGHUI\",\r\n    \"prodPreco\" : 21.33\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/criaProdutos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"criaProdutos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "atualiza descontos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"prodNome\" : \"Produto Atualizado pelo postman\",\r\n    \"prodPreco\" : 100,\r\n    \"prodId\" : 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/atualizaDescontos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"atualizaDescontos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleta descontos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"prodNome\" : \"Produto Atualizado pelo postman\",\r\n    \"prodPreco\" : 100,\r\n    \"prodId\" : 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/deletaProdutos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"deletaProdutos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Compras",
+			"item": [
+				{
+					"name": "busca compras",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/produtos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"produtos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "busca compras do cliente",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/comprasDoCliente",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"comprasDoCliente"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "busca compras do período",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dataInicial\" : \"2023-06-01T00:00:00.000Z\",\r\n    \"dataFinal\" : \"2023-06-01T00:00:00.000Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/comprasDoPeriodo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"comprasDoPeriodo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Realizar Compras",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"prodNome\" : \"IHUDFGBHUIDFGUHBIDFHUIGHBUDFGHUI\",\r\n    \"prodPreco\" : 21.33\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/criaProdutos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"criaProdutos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Itens Compra",
+			"item": [
+				{
+					"name": "busca itens compra",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/produtos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"produtos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insere item de compra",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"prodNome\" : \"IHUDFGBHUIDFGUHBIDFHUIGHBUDFGHUI\",\r\n    \"prodPreco\" : 21.33\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/inserirItem",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"inserirItem"
 							]
 						}
 					},
