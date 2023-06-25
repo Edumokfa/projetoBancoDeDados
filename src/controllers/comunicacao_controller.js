@@ -1,102 +1,226 @@
 const sql = require("mssql");
 require("msnodesqlv8");
-const { executeQuery } = require("../dbConnection.js");
+
+const config = {
+  server: "localhost",
+  database: "MENIN_BD",
+  driver: "msnodesqlv8",
+  user: "admin",
+  password: "admin",
+  options: {
+    trustedConnection: true,
+    trustServerCertificate: true,
+  },
+};
+
+async function runQuery(query) {
+  try {
+    await sql.connect(config);
+    const result = await sql.query(query);
+    return result.recordset;
+  } catch (err) {
+    throw err;
+  } finally {
+    sql.close();
+  }
+}
+
+async function executeQuery(query, res) {
+  try {
+    runQuery(query)
+      .then((response) => {
+        res.status(201).json({ registros: response });
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err });
+      });
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao buscar registro" });
+  }
+}
 
 //Produtos
+async function executaProcedureProduto(operacao, req, res) {
+  try {
+    await sql.connect(config);
+
+    const request = new sql.Request();
+
+    request.input("OPERACAO", sql.VarChar(45), operacao);
+    request.input("PROD_ID", sql.Int, req.body.prodId);
+    request.input("PROD_NOME", sql.VarChar(45), req.body.prodNome);
+    request.input("PROD_PRECO", sql.Decimal(10,3), req.body.prodPreco);
+    request.output("RESPONSE", sql.VarChar(100));
+
+    const result = await request.execute("ALTERAR_PRODUTOS");
+    const response = result.output.RESPONSE;
+    res.status(201).json({ retorno: response });
+  } catch (error) {
+    console.error("Erro:", error.message);
+    res.status(201).json({ erro: error.message });
+  } finally {
+    sql.close();
+  }
+}
+
 exports.buscaProdutos = async function (req, res) {
   executeQuery("SELECT * FROM PRODUTOS", res);
 };
 
 exports.criaProduto = async function (req, res) {
-  const query = `INSERT INTO PRODUTOS (PROD_NOME, PROD_PRECO) VALUES ('${req.body.prodNome}', ${req.body.prodPreco})`;
-  console.log(query);
-  executeQuery(query, res);
+  executaProcedureProduto("INSERT", req, res);
 };
 
 exports.atualizaProduto = async function (req, res) {
-  const prodId = req.body.prodId;
-  const updates = [];
+  executaProcedureProduto("UPDATE", req, res);
+};
 
-  if (req.body.prodNome) {
-    updates.push(`PROD_NOME = '${req.body.prodNome}'`);
-  }
-
-  if (req.body.prodPreco) {
-    updates.push(`PROD_PRECO = ${req.body.prodPreco}`);
-  }
-
-  if (updates.length === 0) {
-    res
-      .status(400)
-      .json({ error: "Nenhum valor para atualizar foi fornecido" });
-    return;
-  }
-  const query = `UPDATE PRODUTOS SET ${updates.join(
-    ", "
-  )} WHERE PROD_ID = ${prodId}`;
-  executeQuery(query, res);
+exports.deletaProduto = async function (req, res) {
+  executaProcedureProduto("DELETE", req, res);
 };
 
 //Clientes
+async function executaProcedureCliente(operacao, req, res) {
+  try {
+    await sql.connect(config);
+
+    const request = new sql.Request();
+
+    request.input("OPERACAO", sql.VarChar(45), operacao);
+    request.input("CLI_ID", sql.Int, req.body.cliId);
+    request.input("CLI_NOME", sql.VarChar(45), req.body.cliNome);
+    request.input("CLI_SOBRENOME", sql.VarChar(45), req.body.cliSobrenome);
+    request.input("CLI_CPF", sql.VarChar(13), req.body.cliCpf);
+    request.input("CLI_CELULAR", sql.VarChar(13), req.body.cliCelular);
+    request.input("CLI_TELEFONE", sql.VarChar(13), req.body.cliTelefone);
+    request.output("RESPONSE", sql.VarChar(100));
+
+    const result = await request.execute("ALTERAR_CLIENTES");
+    const response = result.output.RESPONSE;
+    res.status(201).json({ retorno: response });
+  } catch (error) {
+    console.error("Erro:", error.message);
+    res.status(201).json({ erro: error.message });
+  } finally {
+    sql.close();
+  }
+}
+
 exports.buscaClientes = async function (req, res) {
   executeQuery("SELECT * FROM CLIENTES", res);
 };
 
 exports.criaCliente = async function (req, res) {
-  const query = `INSERT INTO CLIENTES (CLI_NOME, CLI_SOBRENOME, CLI_CPF, CLI_CELULAR, CLI_TELEFONE) 
-  VALUES  ('${req.body.cliNome}', '${req.body.cliSobrenome}', '${req.body.cliCpf}', '${req.body.cliCelular}', '${req.body.cliTelefone}')`;
-  console.log(query);
-  executeQuery(query, res);
+  executaProcedureCliente("INSERT", req, res);
 };
 
 exports.atualizaCliente = async function (req, res) {
-  const cliId = req.body.cliId;
-  const updates = [];
-  
-  if (req.body.cliNome) {
-    updates.push(`CLI_NOME = '${req.body.cliNome}'`);
-  }
+  executaProcedureCliente("UPDATE", req, res);
+};
 
-  if (req.body.cliSobrenome) {
-    updates.push(`CLI_SOBRENOME = '${req.body.cliSobrenome}'`);
-  }
-
-  if (req.body.cliCpf) {
-    updates.push(`CLI_CPF = '${req.body.cliCpf}'`);
-  }
-
-  if (req.body.cliCelular) {
-    updates.push(`CLI_CELULAR = '${req.body.cliCelular}'`);
-  }
-
-  if (req.body.cliTelefone) {
-    updates.push(`CLI_TELEFONE = '${req.body.cliTelefone}'`);
-  }
-
-  if (updates.length === 0) {
-    res
-      .status(400)
-      .json({ error: "Nenhum valor para atualizar foi fornecido" });
-    return;
-  }
-  const query = `UPDATE CLIENTES SET ${updates.join(
-    ", "
-  )} WHERE CLI_ID = ${cliId}`;
-  console.log(query);
-  executeQuery(query, res);
+exports.deletaCliente = async function (req, res) {
+  executaProcedureCliente("DELETE", req, res);
 };
 
 //Descontos
+async function executaProcedureDesconto(operacao, req, res) {
+  try {
+    await sql.connect(config);
+
+    const request = new sql.Request();
+
+    request.input("OPERACAO", sql.VarChar(45), operacao);
+    request.input("DESC_ID", sql.Int, req.body.descId);
+    request.input("DESC_DATA_INICIAL", sql.DateTime, req.body.descDataInicial);
+    request.input("DESC_DATA_FINAL", sql.DateTime, req.body.descDataFinal);
+    request.input("DESC_ID_PROD", sql.Int, req.body.descIdProd);
+    request.input("DESC_PERCENTUAL", sql.Int, req.body.descPercentual);
+    request.output("RESPONSE", sql.VarChar(100));
+
+    const result = await request.execute("ALTERAR_DESCONTOS");
+    const response = result.output.RESPONSE;
+    res.status(201).json({ retorno: response });
+  } catch (error) {
+    console.error("Erro:", error.message);
+    res.status(201).json({ erro: error.message });
+  } finally {
+    sql.close();
+  }
+}
+
 exports.buscaDescontos = async function (req, res) {
   executeQuery("SELECT * FROM DESCONTOS", res);
 };
 
+exports.criaDesconto = async function (req, res) {
+  executaProcedureDesconto("INSERT", req, res);
+};
+
+exports.atualizaDesconto = async function (req, res) {
+  executaProcedureDesconto("UPDATE", req, res);
+};
+
+exports.deletaDesconto = async function (req, res) {
+  executaProcedureDesconto("DELETE", req, res);
+};
+
 //Compras
+async function executaProcedureRealizarCompra(req, res) {
+  try {
+    await sql.connect(config);
+
+    const request = new sql.Request();
+
+    request.input("COM_ID_CLIENTE", sql.Int, req.body.comIdCliente);
+    request.output("RESPONSE", sql.VarChar(100));
+
+    const result = await request.execute("REALIZAR_COMPRA");
+    const response = result.output.RESPONSE;
+    res.status(201).json({ retorno: response });
+  } catch (error) {
+    console.error("Erro:", error.message);
+    res.status(201).json({ erro: error.message });
+  } finally {
+    sql.close();
+  }
+}
+
 exports.buscaCompras = async function (req, res) {
   executeQuery("SELECT * FROM COMPRAS", res);
 };
 
+exports.realizaCompra = async function (req, res) {
+  executaProcedureRealizarCompra(req, res);
+};
+
 //Itens de compra
+async function executaProcedureInserirItens(req, res) {
+  try {
+    await sql.connect(config);
+
+    const request = new sql.Request();
+
+    request.input("ITEC_ID_COMPRA", sql.Int, req.body.itecIdCompra);
+    request.input("ITEC_ID_PRODUTO", sql.Int, req.body.itecIdProduto);
+    request.input("ITEC_QNTD", sql.Int, req.body.itecQnt);
+    request.output("RESPONSE", sql.VarChar(100));
+
+    const result = await request.execute("INSERIR_ITENS");
+    const response = result.output.RESPONSE;
+    res.status(201).json({ retorno: response });
+  } catch (error) {
+    console.error("Erro:", error.message);
+    res.status(201).json({ erro: error.message });
+  } finally {
+    sql.close();
+  }
+}
+
 exports.buscaItensCompra = async function (req, res) {
   executeQuery("SELECT * FROM ITENS_COMPRA", res);
 };
+
+exports.inserirItens = async function (req, res) {
+  executaProcedureInserirItens(req, res);
+};
+
