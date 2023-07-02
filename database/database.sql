@@ -188,6 +188,8 @@ CREATE OR ALTER PROCEDURE ALTERAR_DESCONTOS (@OPERACAO VARCHAR(45), @DESC_ID INT
 AS
     DECLARE @PossuiDesconto BIT;
 	SELECT @PossuiDesconto = CASE WHEN EXISTS (SELECT 1 FROM DESCONTOS WHERE DESC_ID = @DESC_ID) THEN 1 ELSE 0 END;
+	DECLARE @PossuiProduto BIT;
+	SELECT @PossuiProduto = CASE WHEN EXISTS (SELECT 1 FROM PRODUTOS WHERE PROD_ID = @DESC_ID_PROD) THEN 1 ELSE 0 END;
 
 	IF (@OPERACAO = 'INSERT')
 	BEGIN
@@ -195,7 +197,12 @@ AS
 		BEGIN
 			SET @RESPONSE = 'Campos obrigatórios para a inserção não preenchidos';
 			RETURN
-		END
+		END;
+		IF (@PossuiProduto = 0)
+		BEGIN
+		  SET @RESPONSE = 'Não há nenhum Produto com Este Código cadastrado';
+		  RETURN;
+		END;
 		INSERT INTO DESCONTOS (DESC_DATA_INICIAL, DESC_DATA_FINAL, DESC_ID_PROD, DESC_PERCENTUAL) VALUES (@DESC_DATA_INICIAL, @DESC_DATA_FINAL, @DESC_ID_PROD, @DESC_PERCENTUAL);
 		SET @RESPONSE = 'Desconto Inserido com sucesso';
 		RETURN
@@ -205,6 +212,11 @@ AS
 		IF (@PossuiDesconto = 0)
 		BEGIN
 		  SET @RESPONSE = 'Não há nenhum Desconto com Este Código cadastrado';
+		  RETURN;
+		END;
+		IF (@PossuiProduto = 0)
+		BEGIN
+		  SET @RESPONSE = 'Não há nenhum Produto com Este Código cadastrado';
 		  RETURN;
 		END;
 		UPDATE DESCONTOS SET DESC_DATA_INICIAL = @DESC_DATA_INICIAL, DESC_DATA_FINAL = @DESC_DATA_FINAL, DESC_ID_PROD = @DESC_ID_PROD, DESC_PERCENTUAL = @DESC_PERCENTUAL WHERE DESC_ID = @DESC_ID;
