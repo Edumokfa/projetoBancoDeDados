@@ -49,7 +49,7 @@ async function executaProcedureProduto(operacao, req, res) {
     request.input("OPERACAO", sql.VarChar(45), operacao);
     request.input("PROD_ID", sql.Int, req.body.prodId);
     request.input("PROD_NOME", sql.VarChar(45), req.body.prodNome);
-    request.input("PROD_PRECO", sql.Decimal(10,3), req.body.prodPreco);
+    request.input("PROD_PRECO", sql.Decimal(10, 3), req.body.prodPreco);
     request.output("RESPONSE", sql.VarChar(100));
 
     const result = await request.execute("ALTERAR_PRODUTOS");
@@ -192,10 +192,11 @@ async function executaProcedureComprasDoCliente(req, res) {
     const request = new sql.Request();
 
     request.input("CLIENTE_ID", sql.Int, req.body.idCliente);
+    request.output("RESPONSE", sql.VarChar(100));
 
     const result = await request.execute("BUSCAR_TODAS_AS_COMPRAS_DO_CLIENTE");
     const response = result.output.RESPONSE;
-    res.status(201).json({ compras: result.recordset });
+    res.status(201).json({ compras: result.recordset, response: response });
   } catch (error) {
     console.error("Erro:", error.message);
     res.status(201).json({ erro: error.message });
@@ -247,10 +248,11 @@ async function executaProcedureComprasDoPeriodo(req, res) {
 
     request.input("DATA_INICIAL", sql.DateTime, req.body.dataInicial);
     request.input("DATA_FINAL", sql.DateTime, req.body.dataFinal);
+    request.output("RESPONSE", sql.VarChar(100));
 
     const result = await request.execute("BUSCAR_TODAS_AS_COMPRAS_DO_PERIODO");
     const response = result.output.RESPONSE;
-    res.status(201).json({ compras: result.recordset });
+    res.status(201).json({ compras: result.recordset, response: response });
   } catch (error) {
     console.error("Erro:", error.message);
     res.status(201).json({ erro: error.message });

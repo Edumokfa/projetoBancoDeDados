@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "fc91b2c9-3056-4d4f-801c-e2b629dd6573",
+		"_postman_id": "97bb4e72-581a-4972-b6f5-b51cab9a7360",
 		"name": "projetoBancoDeDados",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "22689056"
+		"_exporter_id": "21241361"
 	},
 	"item": [
 		{
@@ -91,7 +91,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cliId\" : 1\r\n}",
+							"raw": "{\r\n    \"cliId\" : 5\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -251,7 +251,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"prodNome\" : \"IHUDFGBHUIDFGUHBIDFHUIGHBUDFGHUI\",\r\n    \"prodPreco\" : 21.33\r\n}",
+							"raw": "{\r\n    \"descDataInicial\" : \"2023-06-01T00:00:00.000Z\",\r\n    \"descDataFinal\" : \"2023-06-01T00:00:00.000Z\",\r\n    \"descIdProd\" : 1,\r\n    \"descPercentual\" : 21\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -259,14 +259,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/criaProdutos",
+							"raw": "http://localhost:3000/criaDescontos",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"criaProdutos"
+								"criaDescontos"
 							]
 						}
 					},
@@ -279,7 +279,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"prodNome\" : \"Produto Atualizado pelo postman\",\r\n    \"prodPreco\" : 100,\r\n    \"prodId\" : 5\r\n}",
+							"raw": "{\r\n    \"descId\" : 1,\r\n    \"descDataInicial\" : \"2023-06-01T00:00:00.000Z\",\r\n    \"descDataFinal\" : \"2023-06-01T00:00:00.000Z\",\r\n    \"descIdProd\" : 1,\r\n    \"descPercentual\" : 21\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -307,7 +307,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"prodNome\" : \"Produto Atualizado pelo postman\",\r\n    \"prodPreco\" : 100,\r\n    \"prodId\" : 5\r\n}",
+							"raw": "{\r\n    \"descId\" : 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -315,14 +315,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/deletaProdutos",
+							"raw": "http://localhost:3000/deletaDescontos",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"deletaProdutos"
+								"deletaDescontos"
 							]
 						}
 					},
@@ -354,9 +354,21 @@
 				},
 				{
 					"name": "busca compras do cliente",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idCliente\" : 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "http://localhost:3000/comprasDoCliente",
 							"protocol": "http",
@@ -409,7 +421,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"prodNome\" : \"IHUDFGBHUIDFGUHBIDFHUIGHBUDFGHUI\",\r\n    \"prodPreco\" : 21.33\r\n}",
+							"raw": "{\r\n    \"comIdCliente\" : 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -417,14 +429,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/criaProdutos",
+							"raw": "http://localhost:3000/realizarCompra",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"criaProdutos"
+								"realizarCompra"
 							]
 						}
 					},
@@ -441,14 +453,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/produtos",
+							"raw": "http://localhost:3000/itensCompra",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"produtos"
+								"itensCompra"
 							]
 						}
 					},
@@ -461,7 +473,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"prodNome\" : \"IHUDFGBHUIDFGUHBIDFHUIGHBUDFGHUI\",\r\n    \"prodPreco\" : 21.33\r\n}",
+							"raw": "{\r\n    \"itecIdCompra\" : 1,\r\n    \"itecIdProduto\" : 1,\r\n    \"itecQnt\" : 3\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
