@@ -78,7 +78,7 @@ BEGIN
 	BEGIN
 		IF (@CLI_NOME IS NULL OR @CLI_SOBRENOME IS NULL OR @CLI_CPF IS NULL OR @CLI_CELULAR IS NULL)
 		BEGIN
-			SET @RESPONSE = 'Campos obrigatórios para a inserção não preenchidos';
+			SET @RESPONSE = 'Campos obrigatÃ³rios para a inserÃ§Ã£o nÃ£o preenchidos';
 			RETURN
 		END
 
@@ -87,7 +87,7 @@ BEGIN
     
 		IF (@PossuiCpf = 1)
 		BEGIN
-		  SET @RESPONSE = 'Já existe um Cliente com Este CPF cadastrado';
+		  SET @RESPONSE = 'JÃ¡ existe um Cliente com Este CPF cadastrado';
 		  RETURN;
 		END;
 		INSERT INTO CLIENTES (CLI_NOME, CLI_SOBRENOME, CLI_CPF, CLI_CELULAR, CLI_TELEFONE) VALUES (@CLI_NOME, @CLI_SOBRENOME, @CLI_CPF, @CLI_CELULAR, @CLI_TELEFONE);
@@ -98,7 +98,7 @@ BEGIN
 	BEGIN
 		IF (@PossuiCliente = 0)
 		BEGIN
-		  SET @RESPONSE = 'Não há nenhum Cliente com Este Código cadastrado';
+		  SET @RESPONSE = 'NÃ£o hÃ¡ nenhum Cliente com Este CÃ³digo cadastrado';
 		  RETURN;
 		END;
 		UPDATE CLIENTES SET CLI_NOME = @CLI_NOME, CLI_SOBRENOME = @CLI_SOBRENOME, CLI_CPF = @CLI_CPF, CLI_CELULAR = @CLI_CELULAR, CLI_TELEFONE = @CLI_TELEFONE WHERE CLI_ID = @CLI_ID;
@@ -112,13 +112,13 @@ BEGIN
     
 		IF (@PossuiCompra = 1)
 		BEGIN
-		  SET @RESPONSE = 'Não é possível excluir o cliente. Existem compras vinculadas a ele.';
+		  SET @RESPONSE = 'NÃ£o Ã© possÃ­vel excluir o cliente. Existem compras vinculadas a ele.';
 		  RETURN;
 		END;
 
 		IF (@PossuiCliente = 0)
 		BEGIN
-		  SET @RESPONSE = 'Não há nenhum Cliente com Este Código cadastrado';
+		  SET @RESPONSE = 'NÃ£o hÃ¡ nenhum Cliente com Este CÃ³digo cadastrado';
 		  RETURN;
 		END;
 
@@ -127,7 +127,7 @@ BEGIN
 		RETURN
 	END
 
-	SET @RESPONSE = 'Operação inválida';
+	SET @RESPONSE = 'OperaÃ§Ã£o invÃ¡lida';
 	RETURN
 END
 GO
@@ -140,7 +140,7 @@ AS
 	BEGIN
 		IF (@PROD_NOME IS NULL OR @PROD_PRECO IS NULL)
 		BEGIN
-			SET @RESPONSE = 'Campos obrigatórios para a inserção não preenchidos';
+			SET @RESPONSE = 'Campos obrigatÃ³rios para a inserÃ§Ã£o nÃ£o preenchidos';
 			RETURN
 		END
 		INSERT INTO PRODUTOS (PROD_NOME, PROD_PRECO) VALUES (@PROD_NOME, @PROD_PRECO);
@@ -151,7 +151,7 @@ AS
 	BEGIN
 		IF (@PossuiProduto = 0)
 		BEGIN
-		  SET @RESPONSE = 'Não há nenhum Produto com Este Código cadastrado';
+		  SET @RESPONSE = 'NÃ£o hÃ¡ nenhum Produto com Este CÃ³digo cadastrado';
 		  RETURN;
 		END;
 		UPDATE PRODUTOS SET PROD_NOME = @PROD_NOME, PROD_PRECO = @PROD_PRECO WHERE PROD_ID = @PROD_ID;
@@ -165,13 +165,13 @@ AS
     
 		IF (@PossuiItemCompra = 1)
 		BEGIN
-		  SET @RESPONSE = 'Não é possível excluir o produto. Ele está em uma ou mais compras.';
+		  SET @RESPONSE = 'NÃ£o Ã© possÃ­vel excluir o produto. Ele estÃ¡ em uma ou mais compras.';
 		  RETURN;
 		END;
 
 		IF (@PossuiProduto = 0)
 		BEGIN
-		  SET @RESPONSE = 'Não há nenhum Produto com Este Código cadastrado';
+		  SET @RESPONSE = 'NÃ£o hÃ¡ nenhum Produto com Este CÃ³digo cadastrado';
 		  RETURN;
 		END;
 
@@ -180,7 +180,7 @@ AS
 		RETURN
 	END
 
-	SET @RESPONSE = 'Operação inválida';
+	SET @RESPONSE = 'OperaÃ§Ã£o invÃ¡lida';
 	RETURN
 GO
 
@@ -195,12 +195,12 @@ AS
 	BEGIN
 		IF (@DESC_DATA_INICIAL IS NULL OR @DESC_DATA_FINAL IS NULL OR @DESC_ID_PROD IS NULL OR @DESC_PERCENTUAL IS NULL)
 		BEGIN
-			SET @RESPONSE = 'Campos obrigatórios para a inserção não preenchidos';
+			SET @RESPONSE = 'Campos obrigatÃ³rios para a inserÃ§Ã£o nÃ£o preenchidos';
 			RETURN
 		END;
 		IF (@PossuiProduto = 0)
 		BEGIN
-		  SET @RESPONSE = 'Não há nenhum Produto com Este Código cadastrado';
+		  SET @RESPONSE = 'NÃ£o hÃ¡ nenhum Produto com Este CÃ³digo cadastrado';
 		  RETURN;
 		END;
 		INSERT INTO DESCONTOS (DESC_DATA_INICIAL, DESC_DATA_FINAL, DESC_ID_PROD, DESC_PERCENTUAL) VALUES (@DESC_DATA_INICIAL, @DESC_DATA_FINAL, @DESC_ID_PROD, @DESC_PERCENTUAL);
@@ -211,12 +211,12 @@ AS
 	BEGIN
 		IF (@PossuiDesconto = 0)
 		BEGIN
-		  SET @RESPONSE = 'Não há nenhum Desconto com Este Código cadastrado';
+		  SET @RESPONSE = 'NÃ£o hÃ¡ nenhum Desconto com Este CÃ³digo cadastrado';
 		  RETURN;
 		END;
 		IF (@PossuiProduto = 0)
 		BEGIN
-		  SET @RESPONSE = 'Não há nenhum Produto com Este Código cadastrado';
+		  SET @RESPONSE = 'NÃ£o hÃ¡ nenhum Produto com Este CÃ³digo cadastrado';
 		  RETURN;
 		END;
 		UPDATE DESCONTOS SET DESC_DATA_INICIAL = @DESC_DATA_INICIAL, DESC_DATA_FINAL = @DESC_DATA_FINAL, DESC_ID_PROD = @DESC_ID_PROD, DESC_PERCENTUAL = @DESC_PERCENTUAL WHERE DESC_ID = @DESC_ID;
@@ -230,13 +230,13 @@ AS
     
 		IF (@PossuiItemCompra = 1)
 		BEGIN
-		  SET @RESPONSE = 'Não é possível excluir o desconto. Ele está em uma ou mais compras.';
+		  SET @RESPONSE = 'NÃ£o Ã© possÃ­vel excluir o desconto. Ele estÃ¡ em uma ou mais compras.';
 		  RETURN;
 		END;
 
 		IF (@PossuiDesconto = 0)
 		BEGIN
-		  SET @RESPONSE = 'Não há nenhum Desconto com Este Código cadastrado';
+		  SET @RESPONSE = 'NÃ£o hÃ¡ nenhum Desconto com Este CÃ³digo cadastrado';
 		  RETURN;
 		END;
 		DELETE FROM DESCONTOS WHERE DESC_ID = @DESC_ID;
@@ -244,7 +244,7 @@ AS
 		RETURN
 	END
 
-	SET @RESPONSE = 'Operação inválida';
+	SET @RESPONSE = 'OperaÃ§Ã£o invÃ¡lida';
 	RETURN
 GO
 
@@ -252,7 +252,7 @@ GO
 AS	
 	IF (@COM_ID_CLIENTE IS NULL)
 	BEGIN
-		SET @RESPONSE = 'Campos obrigatórios para a inserção não preenchidos';
+		SET @RESPONSE = 'Campos obrigatÃ³rios para a inserÃ§Ã£o nÃ£o preenchidos';
 		RETURN
 	END
 	INSERT INTO COMPRAS(COM_ID_CLIENTE) VALUES (@COM_ID_CLIENTE);
@@ -264,14 +264,14 @@ CREATE OR ALTER PROCEDURE INSERIR_ITENS (@ITEC_ID_COMPRA INTEGER, @ITEC_ID_PRODU
 AS
 	IF (@ITEC_ID_COMPRA IS NULL OR @ITEC_ID_PRODUTO IS NULL OR @ITEC_QNTD IS NULL)
 	BEGIN
-		SET @RESPONSE = 'Parâmetros obrigatórios não informados';
+		SET @RESPONSE = 'ParÃ¢metros obrigatÃ³rios nÃ£o informados';
 		RETURN
 	END
 	DECLARE @PossuiProduto BIT;
 	SELECT @PossuiProduto = CASE WHEN EXISTS (SELECT 1 FROM ITENS_COMPRA WHERE ITEC_ID_PRODUTO = @ITEC_ID_PRODUTO) THEN 1 ELSE 0 END;
 	IF (@PossuiProduto = 0)
 	BEGIN
-		SET @RESPONSE = 'Não há nenhum Produto com Este Código cadastrado';
+		SET @RESPONSE = 'NÃ£o hÃ¡ nenhum Produto com Este CÃ³digo cadastrado';
 		RETURN;
 	END;
 	INSERT INTO ITENS_COMPRA(ITEC_ID_COMPRA, ITEC_ID_PRODUTO, ITEC_QNTD, ITEC_ID_DESCONTO) VALUES (@ITEC_ID_COMPRA, @ITEC_ID_PRODUTO, @ITEC_QNTD, (SELECT DESC_ID FROM DESCONTOS WHERE DESC_ID_PROD = @ITEC_ID_PRODUTO AND DESC_SITUACAO = 'A'));
@@ -288,7 +288,7 @@ CREATE OR ALTER PROCEDURE BUSCAR_TODAS_AS_COMPRAS_DO_CLIENTE (@CLIENTE_ID INTEGE
 AS
 	IF (@CLIENTE_ID IS NULL)
 	BEGIN
-		SET @RESPONSE = 'Campos obrigatórios para a pesquisa não preenchidos';
+		SET @RESPONSE = 'Campos obrigatÃ³rios para a pesquisa nÃ£o preenchidos';
 		RETURN
 	END
 	SELECT C.*, IC.* FROM COMPRAS C 
@@ -300,12 +300,12 @@ CREATE OR ALTER PROCEDURE BUSCAR_TODAS_AS_COMPRAS_DO_PERIODO (@DATA_INICIAL DATE
 AS
 	IF (@DATA_INICIAL IS NULL OR @DATA_FINAL IS NULL)
 	BEGIN
-		SET @RESPONSE = 'Campos obrigatórios para a pesquisa não preenchidos';
+		SET @RESPONSE = 'Campos obrigatÃ³rios para a pesquisa nÃ£o preenchidos';
 		RETURN
 	END
 	IF (@DATA_INICIAL > @DATA_FINAL)
 	BEGIN
-		SET @RESPONSE = 'Datas inválidas';
+		SET @RESPONSE = 'Datas invÃ¡lidas';
 		RETURN
 	END
 	SELECT C.*, IC.* FROM COMPRAS C 
@@ -313,25 +313,45 @@ AS
 	WHERE C.COM_DATA >= @DATA_INICIAL AND C.COM_DATA <= @DATA_FINAL;
 GO
 
--- Inserção na tabela CLIENTES
+-- InserÃ§Ã£o na tabela CLIENTES
 INSERT INTO CLIENTES (CLI_NOME, CLI_SOBRENOME, CLI_CPF, CLI_CELULAR, CLI_TELEFONE)
-VALUES ('João', 'Silva', '12345678901', '999999999', '888888888');
+VALUES ('JoÃ£o', 'Silva', '12345678901', '999999999', '888888888');
 
--- Inserção na tabela PRODUTOS
+-- InserÃ§Ã£o na tabela PRODUTOS
 INSERT INTO PRODUTOS (PROD_NOME, PROD_PRECO)
 VALUES ('Camiseta', 29.99),
-       ('Calça', 59.99), 
-       ('Tênis', 99.99);
+       ('CalÃ§a', 59.99), 
+       ('TÃªnis', 99.99);
 
--- Inserção na tabela DESCONTOS
+-- InserÃ§Ã£o na tabela DESCONTOS
 INSERT INTO DESCONTOS (DESC_DATA_INICIAL, DESC_DATA_FINAL, DESC_ID_PROD, DESC_PERCENTUAL, DESC_DATA_CRIACAO)
 VALUES (CONVERT(DATETIME, '2023-06-01', 120), CONVERT(DATETIME, '2023-06-30', 120), 1, 10, GETDATE()),
        (CONVERT(DATETIME, '2023-06-15', 120), CONVERT(DATETIME, '2023-06-30', 120), 2, 20, GETDATE());
 
--- Inserção na tabela COMPRAS
+-- InserÃ§Ã£o na tabela COMPRAS
 INSERT INTO COMPRAS (COM_ID_CLIENTE) VALUES (1);
 
--- Inserção na tabela ITENS_COMPRA
+-- InserÃ§Ã£o na tabela ITENS_COMPRA
 INSERT INTO ITENS_COMPRA (ITEC_ID_COMPRA, ITEC_ID_PRODUTO, ITEC_QNTD, ITEC_ID_DESCONTO)
 VALUES (1, 1, 2, 1),
        (1, 3, 1, NULL);
+
+GO
+CREATE VIEW VW_COMPRAS_DETALHADAS AS
+SELECT C.COM_ID, C.COM_DATA, C.COM_PRECO_TOTAL,
+       CLI.CLI_ID, CLI.CLI_NOME, CLI.CLI_SOBRENOME, CLI.CLI_CPF, CLI.CLI_CELULAR, CLI.CLI_TELEFONE,
+       P.PROD_ID, P.PROD_NOME, P.PROD_PRECO,
+       D.DESC_ID, D.DESC_DATA_INICIAL, D.DESC_DATA_FINAL, D.DESC_PERCENTUAL, D.DESC_DATA_CRIACAO, D.DESC_SITUACAO
+FROM COMPRAS C
+JOIN CLIENTES CLI ON C.COM_ID_CLIENTE = CLI.CLI_ID
+JOIN ITENS_COMPRA IC ON C.COM_ID = IC.ITEC_ID_COMPRA
+JOIN PRODUTOS P ON IC.ITEC_ID_PRODUTO = P.PROD_ID
+LEFT JOIN DESCONTOS D ON IC.ITEC_ID_DESCONTO = D.DESC_ID;
+
+GO
+CREATE RULE PrevePrecoPositivo
+AS
+@total_price > 0;
+GO
+EXECUTE SP_BINDRULE PrevePrecoPositivo, 'COMPRAS.COM_PRECO_TOTAL';
+GO
