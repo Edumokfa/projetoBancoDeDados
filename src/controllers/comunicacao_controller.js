@@ -265,8 +265,15 @@ exports.buscaComprasPeriodo = async function (req, res) {
   executaProcedureComprasDoPeriodo(req, res);
 };
 
+exports.buscaComprasDetalhadas = async function (req, res) {
+  executeQuery("SELECT * FROM VW_COMPRAS_DETALHADAS", res);
+};
+
 exports.buscaItensCompra = async function (req, res) {
-  executeQuery("SELECT * FROM ITENS_COMPRA", res);
+  if (req.body.itecIdCompra === null || req.body.itecIdCompra === '') {
+    return res.status(500).json({ error: "Id da compra não informado" });
+  }
+  executeQuery("SELECT * FROM ITENS_COMPRA WHERE ITEC_ID_COMPRA = " + req.body.itecIdCompra, res);
 };
 
 exports.inserirItens = async function (req, res) {

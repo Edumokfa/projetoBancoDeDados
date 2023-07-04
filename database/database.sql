@@ -339,55 +339,54 @@ VALUES (1, 1, 2, 1),
 GO
 CREATE RULE PrevePrecoPositivo
 AS
-@total_price > 0;
+@total_price >= 0;
 GO
 EXECUTE SP_BINDRULE PrevePrecoPositivo, 'COMPRAS.COM_PRECO_TOTAL';
 GO
-CREATE OR ALTER FUNCTION FormatDate (@timestamp DATETIME) 
+CREATE OR ALTER FUNCTION FormataData (@timestamp DATETIME) 
 RETURNS VARCHAR(10)
 AS
 BEGIN
-    DECLARE @formattedDate VARCHAR(10)
+    DECLARE @DataFormatada VARCHAR(10)
 
-    SET @formattedDate = CONVERT(VARCHAR(10), @timestamp, 101)
+    SET @DataFormatada = CONVERT(VARCHAR(10), @timestamp, 101)
 
-    RETURN @formattedDate
+    RETURN @DataFormatada
 END
 GO
-CREATE FUNCTION dbo.FormatDateTime (@timestamp DATETIME) 
+CREATE FUNCTION FormataDataHora (@timestamp DATETIME) 
 RETURNS VARCHAR(16)
 AS
 BEGIN
-    DECLARE @formattedDateTime VARCHAR(16)
+    DECLARE @DtHoraFormatada VARCHAR(16)
 
-    SET @formattedDateTime = CONVERT(VARCHAR(10), @timestamp, 103) + ' ' +
+    SET @DtHoraFormatada = CONVERT(VARCHAR(10), @timestamp, 103) + ' ' +
                              CONVERT(VARCHAR(5), @timestamp, 108)
 
-    RETURN @formattedDateTime
+    RETURN @DtHoraFormatada
 END
 GO
-CREATE FUNCTION dbo.FormatCPF (@cpf VARCHAR(11)) 
+CREATE FUNCTION FormataCPF (@cpf VARCHAR(11)) 
 RETURNS VARCHAR(14)
 AS
 BEGIN
-    DECLARE @formattedCPF VARCHAR(14)
+    DECLARE @CPFFormatado VARCHAR(14)
 
-    SET @formattedCPF = SUBSTRING(@cpf, 1, 3) + '.' +
+    SET @CPFFormatado = SUBSTRING(@cpf, 1, 3) + '.' +
                         SUBSTRING(@cpf, 4, 3) + '.' +
                         SUBSTRING(@cpf, 7, 3) + '-' +
                         SUBSTRING(@cpf, 10, 2)
 
-    RETURN @formattedCPF
+    RETURN @CPFFormatado
 END
 GO
 CREATE OR ALTER VIEW VW_COMPRAS_DETALHADAS AS
-SELECT C.COM_ID, Dbo.FormatDateTime(C.COM_DATA) AS COM_DATA, C.COM_PRECO_TOTAL,
-       CLI.CLI_ID, CLI.CLI_NOME, CLI.CLI_SOBRENOME, Dbo.FormatCPF(CLI.CLI_CPF) AS CLI_CPF, CLI.CLI_CELULAR, CLI.CLI_TELEFONE,
+SELECT C.COM_ID, Dbo.FormataDataHora(C.COM_DATA) AS COM_DATA, C.COM_PRECO_TOTAL,
+       CLI.CLI_ID, CLI.CLI_NOME, CLI.CLI_SOBRENOME, Dbo.FormataCPF(CLI.CLI_CPF) AS CLI_CPF, CLI.CLI_CELULAR, CLI.CLI_TELEFONE,
        P.PROD_ID, P.PROD_NOME, P.PROD_PRECO,
-       D.DESC_ID, Dbo.FormatDate(D.DESC_DATA_INICIAL) AS DESC_DATA_INICIAL, Dbo.FormatDate(D.DESC_DATA_FINAL) AS DESC_DATA_FINAL, D.DESC_PERCENTUAL, Dbo.FormatDate(D.DESC_DATA_CRIACAO) as DESC_DATA_CRIACAO, D.DESC_SITUACAO
+       D.DESC_ID, Dbo.FormataData(D.DESC_DATA_INICIAL) AS DESC_DATA_INICIAL, Dbo.FormataData(D.DESC_DATA_FINAL) AS DESC_DATA_FINAL, D.DESC_PERCENTUAL, Dbo.FormataData(D.DESC_DATA_CRIACAO) as DESC_DATA_CRIACAO, D.DESC_SITUACAO
 FROM COMPRAS C
 JOIN CLIENTES CLI ON C.COM_ID_CLIENTE = CLI.CLI_ID
 JOIN ITENS_COMPRA IC ON C.COM_ID = IC.ITEC_ID_COMPRA
 JOIN PRODUTOS P ON IC.ITEC_ID_PRODUTO = P.PROD_ID
 LEFT JOIN DESCONTOS D ON IC.ITEC_ID_DESCONTO = D.DESC_ID;
-
